@@ -1,4 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
+import React, { useState } from "react";
 import {
   FlatList,
   Image,
@@ -13,12 +14,14 @@ import {
 
 import Bookmark from "../../assets/Bookmark.svg";
 import Comment from "../../assets/Comment.svg";
-import foto from "../../assets/user.png";
+import user from "../../assets/user.png";
+import foto from "../../assets/foto.png";
 import foto2 from "../../assets/foto2.png";
 import foto3 from "../../assets/foto3.png";
-import foto4 from "../../assets/foto.png";
+import foto4 from "../../assets/foto4.png";
 import Heart from "../../assets/Heart.svg";
-import image from "../../assets/cristo-redentor.png";
+import image from "../../assets/cristo.png";
+import image2 from "../../assets/image2.png";
 import Logo from "../../assets/logo.svg";
 import Message from "../../assets/message.svg";
 import Points from "../../assets/points.svg";
@@ -28,7 +31,7 @@ import Stroke from "../../assets/stroke.svg";
 const DATA = [
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: foto4,
+    pathURL: foto,
   },
   {
     id: Math.random().toString(36).substring(2, 15),
@@ -40,46 +43,66 @@ const DATA = [
   },
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: foto,
+    pathURL: foto4,
   },
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: foto,
+    pathURL: user,
   },
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: foto,
+    pathURL: user,
   },
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: foto,
+    pathURL: user,
   },
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: foto,
+    pathURL: user,
   },
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: foto,
+    pathURL: user,
   },
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: foto,
+    pathURL: user,
+  },
+];
+
+const mockComments = [
+  {
+    id: 1,
+    username: "Vinicius",
+    text: "Linda foto!",
+  },
+  {
+    id: 2,
+    username: "Gustavo",
+    text: "Adorei essa vista!",
+  },
+  {
+    id: 3,
+    username: "Larissa",
+    text: "Que lugar incrível!",
   },
 ];
 
 export function Home() {
+  const [showComments, setShowComments] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Logo width={127} height={49} />
         <View style={styles.headerOptions}>
-        <TouchableOpacity>
-          <Stroke />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Message />
-        </TouchableOpacity>
+          <TouchableOpacity>
+            <Stroke />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Message />
+          </TouchableOpacity>
         </View>
       </View>
       <ScrollView
@@ -112,7 +135,9 @@ export function Home() {
             <View style={styles.contentHeaderLeft}>
               <Image
                 style={styles.contentHeaderLeftImage}
-                source={{ uri: "https://github.com/williamdubgod.png" }}
+                source={{
+                  uri: "https://github.com/williamdubgod.png",
+                }}
               />
               <Text style={styles.contentHeaderLeftText}>William Vulcano</Text>
             </View>
@@ -126,7 +151,7 @@ export function Home() {
             <View style={styles.contentFooterOptions}>
               <View style={styles.contentFooterOptionsButton}>
                 <TouchableOpacity>
-                  <Heart />                 
+                  <Heart />
                 </TouchableOpacity>
                 <TouchableOpacity>
                   <Comment />
@@ -146,9 +171,19 @@ export function Home() {
               </Text>
               <Text
                 style={[styles.contentFooterText2, styles.contentFooterText]}
+                onPress={() => setShowComments(!showComments)}
               >
                 View all 3 comments
               </Text>
+              {showComments && (
+                <View>
+                  {mockComments.map((comment) => (
+                    <View key={comment.id}>
+                      <Text style={{ color: "#fff" }}>{comment.username}: {comment.text}</Text>
+                    </View>
+                  ))}
+                </View>
+              )}
               <Text
                 style={[styles.contentFooterText3, styles.contentFooterText]}
               >
@@ -157,27 +192,28 @@ export function Home() {
             </View>
           </View>
         </View>
-
         <View style={styles.content}>
           <View style={styles.contentHeader}>
             <View style={styles.contentHeaderLeft}>
               <Image
                 style={styles.contentHeaderLeftImage}
-                source={{ uri: "https://github.com/gustavo-guarnieri-de-melo.png" }}
+                source={{
+                  uri: "https://github.com/gustavo-guarnieri-de-melo.png",
+                }}
               />
               <Text style={styles.contentHeaderLeftText}>Gustavo Guarnieri</Text>
             </View>
             <Points />
           </View>
           <View style={styles.contentImage}>
-            <Image source={image} />
+            <Image source={image2} />
           </View>
 
           <View style={styles.contentFooter}>
             <View style={styles.contentFooterOptions}>
               <View style={styles.contentFooterOptionsButton}>
                 <TouchableOpacity>
-                  <Heart />                 
+                  <Heart />
                 </TouchableOpacity>
                 <TouchableOpacity>
                   <Comment />
@@ -193,17 +229,17 @@ export function Home() {
               <Text
                 style={[styles.contentFooterText1, styles.contentFooterText]}
               >
-                clicslab How IOT is changing the world?
+                Minha faculdade
               </Text>
               <Text
                 style={[styles.contentFooterText2, styles.contentFooterText]}
               >
-                View all 3 comments
+                No comments
               </Text>
               <Text
                 style={[styles.contentFooterText3, styles.contentFooterText]}
               >
-                5 hours ago See Translation
+                3 hours ago See Translation
               </Text>
             </View>
           </View>
