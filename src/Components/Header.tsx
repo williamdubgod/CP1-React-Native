@@ -1,8 +1,10 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
-import { Logo, Stroke, Message } from "./Icons";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import Logo from "../assets/logo.svg";
+import Stroke from "../assets/stroke.svg";
+import Message from "../assets/message.svg";
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
     <View style={styles.header}>
       <Logo width={127} height={49} />
@@ -18,7 +20,7 @@ const Header = () => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   header: {
     width: "100%",
     height: 20,
@@ -34,6 +36,6 @@ const styles = {
     paddingHorizontal: 10,
     gap: 20,
   },
-};
+});
 
 export default Header;

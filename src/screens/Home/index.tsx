@@ -1,17 +1,14 @@
-import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
+
 import {
-  FlatList,
   Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
-
 import Bookmark from "../../assets/Bookmark.svg";
 import Comment from "../../assets/Comment.svg";
 import user from "../../assets/user.png";
@@ -19,14 +16,12 @@ import foto from "../../assets/foto.png";
 import foto2 from "../../assets/foto2.png";
 import foto3 from "../../assets/foto3.png";
 import foto4 from "../../assets/foto4.png";
+import foto5 from "../../assets/foto5.png";
 import Heart from "../../assets/Heart.svg";
-import image from "../../assets/cristo.png";
-import image2 from "../../assets/image2.png";
-import Logo from "../../assets/logo.svg";
-import Message from "../../assets/message.svg";
 import Points from "../../assets/points.svg";
 import Share from "../../assets/Share.svg";
-import Stroke from "../../assets/stroke.svg";
+import Header from "../../Components/Header";
+import PhotoList from "../../Components/PhotoList";
 
 const DATA = [
   {
@@ -47,7 +42,7 @@ const DATA = [
   },
   {
     id: Math.random().toString(36).substring(2, 15),
-    pathURL: user,
+    pathURL: foto5,
   },
   {
     id: Math.random().toString(36).substring(2, 15),
@@ -90,46 +85,34 @@ const mockComments = [
 ];
 
 export function Home() {
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState({});
+  const [likes, setLikes] = useState(145); 
+  const [liked, setLiked] = useState(false);
+
+  const toggleComments = (itemId) => {
+    setShowComments((prev) => ({
+      ...prev,
+      [itemId]: !prev[itemId],
+    }));
+  };
+
+  const toggleLike = () => {
+    if (liked) {
+      // Se já foi curtido, diminua o número de likes
+      setLikes(likes - 1);
+    } else {
+      // Se ainda não foi curtido, aumente o número de likes
+      setLikes(likes + 1);
+    }
+    // Inverta o estado de liked
+    setLiked(!liked);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Logo width={127} height={49} />
-        <View style={styles.headerOptions}>
-          <TouchableOpacity>
-            <Stroke />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Message />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ width: "100%" }}
-      >
-        <View style={styles.stores}>
-          <FlatList
-            data={DATA}
-            horizontal={true}
-            keyExtractor={(item) => item.id}
-            renderItem={(item) => (
-              <LinearGradient
-                colors={["#D52865", "#F7B55A"]}
-                style={styles.storesCard}
-                key={item.item.id}
-              >
-                <TouchableOpacity>
-                  <Image
-                    style={styles.storesCardImage}
-                    source={item.item.pathURL}
-                  />
-                </TouchableOpacity>
-              </LinearGradient>
-            )}
-          />
-        </View>
+      <Header />
+      <ScrollView showsVerticalScrollIndicator={false} style={{ width: "100%" }}>
+        <PhotoList data={DATA} />
         <View style={styles.content}>
           <View style={styles.contentHeader}>
             <View style={styles.contentHeaderLeft}>
@@ -139,20 +122,22 @@ export function Home() {
                   uri: "https://github.com/williamdubgod.png",
                 }}
               />
-              <Text style={styles.contentHeaderLeftText}>William Vulcano</Text>
+              <Text style={styles.contentHeaderLeftText}>
+                William Vulcano
+              </Text>
             </View>
             <Points />
           </View>
           <View style={styles.contentImage}>
-            <Image source={image} />
+            <Image source={require("../../assets/cristo.png")} />
           </View>
 
           <View style={styles.contentFooter}>
             <View style={styles.contentFooterOptions}>
               <View style={styles.contentFooterOptionsButton}>
-                <TouchableOpacity>
-                  <Heart />
-                </TouchableOpacity>
+              <TouchableOpacity onPress={toggleLike}>
+                <Heart />
+              </TouchableOpacity>
                 <TouchableOpacity>
                   <Comment />
                 </TouchableOpacity>
@@ -160,26 +145,35 @@ export function Home() {
                   <Share />
                 </TouchableOpacity>
               </View>
-              <Bookmark />
+              <TouchableOpacity>
+                <Bookmark />
+              </TouchableOpacity>
             </View>
 
             <View style={styles.contentFooterTexts}>
+            <Text style={[styles.contentFooterText1, styles.contentFooterText]}>
+              {likes} Likes
+            </Text>
               <Text
                 style={[styles.contentFooterText1, styles.contentFooterText]}
               >
                 Visita ao Cristo Redentor!
               </Text>
-              <Text
-                style={[styles.contentFooterText2, styles.contentFooterText]}
-                onPress={() => setShowComments(!showComments)}
+              <TouchableOpacity
+                style={styles.showCommentsButton}
+                onPress={() => toggleComments(DATA[0].id)}
               >
-                View all 3 comments
-              </Text>
-              {showComments && (
+                <Text style={{ color: "#fff" }}>
+                  View Comments ({mockComments.length})
+                </Text>
+              </TouchableOpacity>
+              {showComments[DATA[0].id] && (
                 <View>
                   {mockComments.map((comment) => (
                     <View key={comment.id}>
-                      <Text style={{ color: "#fff" }}>{comment.username}: {comment.text}</Text>
+                      <Text style={{ color: "#fff" }}>
+                        {comment.username}: {comment.text}
+                      </Text>
                     </View>
                   ))}
                 </View>
@@ -201,12 +195,14 @@ export function Home() {
                   uri: "https://github.com/gustavo-guarnieri-de-melo.png",
                 }}
               />
-              <Text style={styles.contentHeaderLeftText}>Gustavo Guarnieri</Text>
+              <Text style={styles.contentHeaderLeftText}>
+                Gustavo Guarnieri
+              </Text>
             </View>
             <Points />
           </View>
           <View style={styles.contentImage}>
-            <Image source={image2} />
+            <Image source={require("../../assets/image2.png")} />
           </View>
 
           <View style={styles.contentFooter}>
@@ -222,24 +218,31 @@ export function Home() {
                   <Share />
                 </TouchableOpacity>
               </View>
-              <Bookmark />
+              <TouchableOpacity>
+                <Bookmark />
+              </TouchableOpacity>
             </View>
 
             <View style={styles.contentFooterTexts}>
+            <Text style={[styles.contentFooterText1, styles.contentFooterText]}>25 Likes</Text>
               <Text
                 style={[styles.contentFooterText1, styles.contentFooterText]}
               >
-                Minha faculdade
+                Minha faculdade!
               </Text>
-              <Text
-                style={[styles.contentFooterText2, styles.contentFooterText]}
+              <TouchableOpacity
+                style={styles.showCommentsButton}
+                onPress={() => toggleComments(DATA[1].id)}
               >
-                No comments
-              </Text>
+                <Text style={{ color: "#fff" }}>
+                  No comments
+                </Text>
+              </TouchableOpacity>
+              
               <Text
                 style={[styles.contentFooterText3, styles.contentFooterText]}
               >
-                3 hours ago See Translation
+                5 hours ago See Translation
               </Text>
             </View>
           </View>
@@ -254,39 +257,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#000000",
     alignItems: "center",
-  },
-  header: {
-    width: "100%",
-    height: 20,
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    marginTop: 20,
-  },
-  headerOptions: {
-    alignItems: "center",
-    flexDirection: "row",
-    paddingHorizontal: 10,
-    gap: 20,
-  },
-  stores: {
-    height: 104,
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingLeft: 10,
-    paddingVertical: 10,
-  },
-  storesCard: {
-    borderRadius: 50,
-    marginRight: 14,
-  },
-  storesCardImage: {
-    width: 64,
-    height: 64,
-    borderRadius: 50,
-    margin: 2,
   },
   content: {
     width: "100%",
@@ -319,6 +289,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 355,
   },
+  showCommentsButton: {
+    color: "#fff",
+    marginTop: 10,
+    textDecorationLine: "underline",
+  },
   contentFooter: {},
   contentFooterOptions: {
     height: 40,
@@ -336,13 +311,12 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   contentFooterTexts: {
-    paddingLeft: 20,
+    paddingLeft: 10,
     gap: 10,
   },
   contentFooterText1: {
     fontSize: 14,
   },
-
   contentFooterText2: {
     fontSize: 14,
   },
@@ -350,3 +324,5 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
 });
+
+export default Home;
