@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { FlatList, Image, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 interface PhotoListProps {
@@ -17,7 +17,9 @@ const PhotoList: React.FC<PhotoListProps> = ({ data }) => {
           colors={["#D52865", "#F7B55A"]}
           style={styles.storesCard}
         >
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            Alert.alert('Você clicou em um stories');
+          }}>
             <Image
               style={styles.storesCardImage}
               source={item.pathURL}

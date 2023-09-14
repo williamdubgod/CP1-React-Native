@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import Logo from "../assets/logo.svg";
 import Stroke from "../assets/stroke.svg";
 import Message from "../assets/message.svg";
@@ -9,11 +9,15 @@ const Header: React.FC = () => {
     <View style={styles.header}>
       <Logo width={127} height={49} />
       <View style={styles.headerOptions}>
-        <TouchableOpacity>
-          <Stroke />
+        <TouchableOpacity onPress={() => {
+            Alert.alert('Você clicou no ícone de notificações');
+          }}>
+            <Stroke />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Message />
+        <TouchableOpacity onPress={() => {
+            Alert.alert('Você clicou no ícone de mensagens');
+          }}>
+            <Message />
         </TouchableOpacity>
       </View>
     </View>
@@ -28,7 +32,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 10,
-    marginTop: 20,
+    marginTop: 50,
+    marginBottom: 15
   },
   headerOptions: {
     alignItems: "center",

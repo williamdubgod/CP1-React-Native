@@ -8,6 +8,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import Bookmark from "../../assets/Bookmark.svg";
 import Comment from "../../assets/Comment.svg";
@@ -98,13 +99,10 @@ export function Home() {
 
   const toggleLike = () => {
     if (liked) {
-      // Se já foi curtido, diminua o número de likes
       setLikes(likes - 1);
     } else {
-      // Se ainda não foi curtido, aumente o número de likes
       setLikes(likes + 1);
     }
-    // Inverta o estado de liked
     setLiked(!liked);
   };
 
@@ -126,7 +124,11 @@ export function Home() {
                 William Vulcano
               </Text>
             </View>
-            <Points />
+            <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de opções da foto');
+                }}>
+                  <Points />
+            </TouchableOpacity>
           </View>
           <View style={styles.contentImage}>
             <Image source={require("../../assets/cristo.png")} />
@@ -138,16 +140,22 @@ export function Home() {
               <TouchableOpacity onPress={toggleLike}>
                 <Heart />
               </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de comentário');
+                }}>
                   <Comment />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de compartilhar');
+                }}>
                   <Share />
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity>
-                <Bookmark />
-              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de salvar a publicação');
+                }}>
+                  <Bookmark />
+                </TouchableOpacity>
             </View>
 
             <View style={styles.contentFooterTexts}>
@@ -199,7 +207,11 @@ export function Home() {
                 Gustavo Guarnieri
               </Text>
             </View>
-            <Points />
+            <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de opções da foto');
+                }}>
+                  <Points />
+            </TouchableOpacity>
           </View>
           <View style={styles.contentImage}>
             <Image source={require("../../assets/image2.png")} />
@@ -208,20 +220,29 @@ export function Home() {
           <View style={styles.contentFooter}>
             <View style={styles.contentFooterOptions}>
               <View style={styles.contentFooterOptionsButton}>
-                <TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de Like');
+                }}>
                   <Heart />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de comentário');
+                }}>
                   <Comment />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de compartilhar');
+                }}>
                   <Share />
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity>
-                <Bookmark />
-              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                  Alert.alert('Você clicou no ícone de salvar a publicação');
+                }}>
+                  <Bookmark />
+                </TouchableOpacity>
             </View>
+
 
             <View style={styles.contentFooterTexts}>
             <Text style={[styles.contentFooterText1, styles.contentFooterText]}>25 Likes</Text>
