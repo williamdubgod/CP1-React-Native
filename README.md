@@ -1,5 +1,4 @@
-# CP1-React-Native
-Grupo: 
+# Grupo:
 Gustavo Guarnieri de Melo - RM:97100
 Gustavo Santos Nascimento - RM:96687
 Vinicíus Almeida Kotchetkoff - RM:96331
